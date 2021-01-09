@@ -1,4 +1,7 @@
 const {Telegraf}  = require('telegraf');
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT|| 4000;
 const axios  = require('axios');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -41,3 +44,11 @@ bot.launch()
 //process.once('SIGTERM', () => bot.stop('SIGTERM'))
 
 console.log('app started')
+
+app.get('/',(req,res)=>{
+    res.send("Telegram bot working")
+});
+
+app.listen(PORT,()=>{
+    console.log(`running on ${PORT}`);
+})
