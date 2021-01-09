@@ -9,7 +9,7 @@ bot.help((ctx) => ctx.reply('type movie name for details.'))
 bot.on('sticker', (ctx) => ctx.reply('👍'))
 bot.on('text',async(ctx)=>{
     let query = ctx.update.message.text;
-    console.log()
+    
     try {
 
         const data = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=d4f4bbc8b9595d0a2dff68a77515c33f&query=${query}`)
@@ -37,7 +37,7 @@ bot.launch()
 
 
 // Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+//process.once('SIGINT', () => bot.stop('SIGINT'))
+//process.once('SIGTERM', () => bot.stop('SIGTERM'))
 
 console.log('app started')
