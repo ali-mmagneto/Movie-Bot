@@ -7,7 +7,21 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
-bot.start((ctx) => ctx.reply('Welcome! this is IMDB bot. type any movie name for details.'))
+bot.start((ctx) =>{
+    try {
+        ctx.reply('Welcome! this is IMDB bot. type any movie name for details.').catch((err)=>{
+            if(err){
+                console.log("err")
+                console.log(err)
+                bot.stop('SIGINT');
+                bot.stop('SIGTERM')
+            }
+        })
+    } catch (error) {
+        console.log("blocked")
+        console.log(error)
+    }
+})
 bot.help((ctx) => ctx.reply('type movie name for details.'))
 bot.on('sticker', (ctx) => ctx.reply('👍'))
 bot.on('text',async(ctx)=>{
@@ -19,9 +33,9 @@ bot.on('text',async(ctx)=>{
         const result = data.data.results;
      if(result.length>0){
          result.forEach((x)=>{
-             
+             let desc = x.overview.substring(0,900);
              ctx.replyWithPhoto(x.poster_path?`https://image.tmdb.org/t/p/w600_and_h900_bestv2${x.poster_path}`:'https://unsplash.com/photos/_7HU079sGNw',
-             {caption: "Title : "  + x.title + "\n" + "Original Language : "  + x.original_language + "\n" + "Description : "  + x.overview + "\n" + "Release : " + x.release_date,parse_mode:"Markdown"})
+             {caption: "Title : "  + x.title + "\n" + "Original Language : "  + x.original_language + "\n" + "Description : "  + desc + "\n" + "Release : " + x.release_date,parse_mode:"Markdown"})
          })
      }else{
          ctx.reply(`No movie with name ${query} found ${ctx.update.message.from.first_name}!!`);
@@ -30,6 +44,7 @@ bot.on('text',async(ctx)=>{
      }
         
     } catch (error) {
+        console.log('error: ')
         console.log(error)
     }
      
@@ -46,7 +61,8 @@ bot.launch()
 console.log('app started')
 
 app.get('/',(req,res)=>{
-    res.send("Telegram bot working")
+   
+    res.redirect('http://www.khushnoodahmed.in/')
 });
 
 app.listen(PORT,()=>{
