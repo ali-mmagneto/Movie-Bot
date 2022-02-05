@@ -9,7 +9,7 @@ dotenv.config();
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start((ctx) =>{
     try {
-        ctx.reply('Welcome! this is IMDB bot. type any movie name for details.').catch((err)=>{
+        ctx.reply('Hoş geldin! Bu IMDB botuna. ayrıntılar için herhangi bir film adı yazın.').catch((err)=>{
             if(err){
                 console.log("err")
                 console.log(err)
@@ -22,7 +22,7 @@ bot.start((ctx) =>{
         console.log(error)
     }
 })
-bot.help((ctx) => ctx.reply('type movie name for details.'))
+bot.help((ctx) => ctx.reply('ayrıntılar için film adı yazın.'))
 bot.on('sticker', (ctx) => ctx.reply('👍'))
 bot.on('text',async(ctx)=>{
     let query = ctx.update.message.text;
@@ -35,10 +35,10 @@ bot.on('text',async(ctx)=>{
          result.forEach((x)=>{
              let desc = x.overview.substring(0,900);
              ctx.replyWithPhoto(x.poster_path?`https://image.tmdb.org/t/p/w600_and_h900_bestv2${x.poster_path}`:'https://unsplash.com/photos/_7HU079sGNw',
-             {caption: "Title : "  + x.title + "\n" + "Original Language : "  + x.original_language + "\n" + "Description : "  + desc + "\n" + "Release : " + x.release_date,parse_mode:"Markdown"})
+             {caption: "Adı : "  + x.title + "\n" + "Orjinal Dili : "  + x.original_language + "\n" + "Açıklama: "  + desc + "\n" + "Yayınlanma Zamanı : " + x.release_date,parse_mode:"Markdown"})
          })
      }else{
-         ctx.reply(`No movie with name ${query} found ${ctx.update.message.from.first_name}!!`);
+         ctx.reply(`${query} İsimli Film Bulunamadı ${ctx.update.message.from.first_name}!!`);
          //ctx.replyWithDice();
          ctx.reply('🙀')
      }
