@@ -35,7 +35,7 @@ bot.on('text',async(ctx)=>{
          result.forEach((x)=>{
              let desc = x.overview.substring(0,900);
              ctx.replyWithPhoto(x.poster_path?`https://image.tmdb.org/t/p/w600_and_h900_bestv2${x.poster_path}`:'https://unsplash.com/photos/_7HU079sGNw',
-             {caption: "Adı : "  + x.title + "\n" + "Orjinal Dili : "  + x.original_language + "\n" + "Açıklama: "  + desc + "\n" + "Yayınlanma Zamanı : " + x.release_date,parse_mode:"Markdown"})
+             {caption: "*Adı* : "  + x.title + "\n" + "*Orjinal Dili* : "  + x.original_language + "\n\n" + "*Açıklama*: "  + desc + "\n" + "*Yayınlanma Zamanı* : " + x.release_date,parse_mode:"Markdown"})
          })
      }else{
          ctx.reply(`${query} İsimli Film Bulunamadı ${ctx.update.message.from.first_name}!!`);
